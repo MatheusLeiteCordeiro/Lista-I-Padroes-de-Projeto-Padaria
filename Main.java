@@ -1,14 +1,31 @@
-/**
- * Create an order and print it
- */
 public class Main {
     public static void main(String[] args) {
-        // Create the order
         Order order = new Order();
-        order.addCake(new VanillaCake());
+
+        // 1. Bolo de chocolate
         order.addCake(new ChocolateCake());
 
-        // Print the order
+        // 2. Bolo de baunilha com o dizer "PLAIN!"
+        order.addCake(new SayingDecorator(new VanillaCake(), "PLAIN!"));
+
+        // 3. Bolo de baunilha com granulado com o dizer "FANCY"
+        order.addCake(
+            new SayingDecorator(
+                new SprinklesDecorator(new VanillaCake()),
+                "FANCY"
+            )
+        );
+
+        // 4. Bolo de morango em várias camadas com granulado duplo
+        //    e dois dizeres "One of" e "EVERYTHING"
+        Cake fancy = new StrawberryCake();
+        fancy = new SayingDecorator(fancy, "One of");
+        fancy = new SayingDecorator(fancy, "EVERYTHING");
+        fancy = new SprinklesDecorator(fancy);
+        fancy = new SprinklesDecorator(fancy);
+        fancy = new MultiLayeredDecorator(fancy);
+        order.addCake(fancy);
+
         order.printOrder();
     }
 }
